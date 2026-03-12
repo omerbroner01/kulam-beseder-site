@@ -1,291 +1,603 @@
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>כולם בסדר - Kulam Beseder</title>
-    <style>
-        :root {
-            --bg-color: #0B1120;
-            --surface-color: #1E293B;
-            --surface-hover: #26344A;
-            --text-primary: #F8FAFC;
-            --text-secondary: #94A3B8;
-            --accent-green: #10B981;
-            --accent-green-dim: rgba(16, 185, 129, 0.15);
-            --border-color: rgba(248, 250, 252, 0.05);
-            --card-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-            --card-shadow-hover: 0 15px 35px rgba(0, 0, 0, 0.4);
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>כולם בסדר - Kulam Beseder</title>
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700;800&display=swap" rel="stylesheet">
 
-        body {
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-primary);
-            line-height: 1.6;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
+  <style>
+    :root {
+      --bg: #07101f;
+      --bg-2: #0b1528;
+      --surface: rgba(22, 34, 57, 0.72);
+      --surface-strong: rgba(30, 41, 59, 0.9);
+      --surface-hover: rgba(37, 52, 77, 0.95);
+      --border: rgba(255, 255, 255, 0.08);
+      --text: #f8fafc;
+      --text-soft: #cbd5e1;
+      --text-muted: #94a3b8;
+      --green: #10b981;
+      --green-soft: rgba(16, 185, 129, 0.16);
+      --blue-glow: rgba(59, 130, 246, 0.18);
+      --shadow: 0 18px 60px rgba(0, 0, 0, 0.35);
+      --shadow-hover: 0 22px 70px rgba(0, 0, 0, 0.45);
+      --radius-xl: 28px;
+      --radius-lg: 22px;
+      --radius-md: 16px;
+      --max-width: 1160px;
+    }
 
-        .container {
-            width: 100%;
-            max-width: 1100px;
-            padding: 0 1.5rem;
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-        }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-        /* Hero Section */
-        .hero {
-            text-align: center;
-            padding: 6rem 0 4rem;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
+    html {
+      scroll-behavior: smooth;
+    }
 
-        .badge {
-            background-color: var(--accent-green-dim);
-            color: var(--accent-green);
-            padding: 0.5rem 1rem;
-            border-radius: 999px;
-            font-size: 0.875rem;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-            margin-bottom: 1.5rem;
-            display: inline-block;
-        }
+    body {
+      font-family: "Heebo", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top right, rgba(16, 185, 129, 0.08), transparent 20%),
+        radial-gradient(circle at top left, rgba(59, 130, 246, 0.12), transparent 28%),
+        linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 100%);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
 
-        .hero h1 {
-            font-size: clamp(2.5rem, 5vw, 4rem);
-            font-weight: 800;
-            margin-bottom: 1.5rem;
-            letter-spacing: -0.5px;
-        }
+    body::before,
+    body::after {
+      content: "";
+      position: fixed;
+      inset: auto;
+      width: 360px;
+      height: 360px;
+      border-radius: 999px;
+      filter: blur(80px);
+      opacity: 0.35;
+      pointer-events: none;
+      z-index: 0;
+    }
 
-        .hero .subtitle {
-            color: var(--text-secondary);
-            font-size: clamp(1.125rem, 2vw, 1.25rem);
-            max-width: 600px;
-            margin: 0 auto 3rem;
-        }
+    body::before {
+      top: -80px;
+      left: -100px;
+      background: rgba(59, 130, 246, 0.16);
+    }
 
-        /* Action Section */
-        .action-section {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-bottom: 3rem;
-        }
+    body::after {
+      bottom: -120px;
+      right: -60px;
+      background: rgba(16, 185, 129, 0.12);
+    }
 
-        .btn {
-            background-color: var(--accent-green);
-            color: var(--bg-color);
-            border: none;
-            padding: 1rem 2.5rem;
-            font-size: 1.125rem;
-            font-weight: 700;
-            border-radius: 999px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-family: inherit;
-        }
+    .page {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+    }
 
-        .btn:disabled {
-            background-color: #334155;
-            color: #64748B;
-            cursor: not-allowed;
-            box-shadow: none;
-        }
+    .container {
+      width: min(100%, var(--max-width));
+      margin: 0 auto;
+      padding: 0 20px;
+    }
 
-        .note {
-            margin-top: 1rem;
-            color: var(--text-secondary);
-            font-size: 0.875rem;
-        }
+    .topbar {
+      padding: 20px 0 0;
+    }
 
-        /* Features Section */
-        .features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 5rem;
-        }
+    .topbar-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 14px 18px;
+      background: rgba(9, 17, 32, 0.45);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      backdrop-filter: blur(14px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
 
-        .card {
-            background-color: var(--surface-color);
-            border: 1px solid var(--border-color);
-            border-radius: 24px;
-            padding: 2.5rem 2rem;
-            box-shadow: var(--card-shadow);
-            transition: all 0.3s ease;
-            text-align: right;
-            display: flex;
-            flex-direction: column;
-        }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
 
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--card-shadow-hover);
-            background-color: var(--surface-hover);
-        }
+    .brand-logo {
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      object-fit: contain;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+      padding: 6px;
+      flex-shrink: 0;
+    }
 
-        .card-icon {
-            font-size: 2rem;
-            background-color: var(--bg-color);
-            width: 64px;
-            height: 64px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 16px;
-            margin-bottom: 1.5rem;
-            border: 1px solid var(--border-color);
-        }
+    .brand-text {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.1;
+    }
 
-        .card h3 {
-            font-size: 1.25rem;
-            font-weight: 700;
-            margin-bottom: 0.75rem;
-        }
+    .brand-text strong {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--text);
+    }
 
-        .card p {
-            color: var(--text-secondary);
-            font-size: 1rem;
-            flex: 1;
-        }
+    .brand-text span {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+    }
 
-        /* Contact Section */
-        .contact {
-            background-color: var(--surface-color);
-            border-radius: 24px;
-            padding: 3rem 2rem;
-            text-align: center;
-            margin-bottom: 4rem;
-            border: 1px solid var(--border-color);
-        }
+    .top-link {
+      color: var(--text-soft);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.25s ease, opacity 0.25s ease;
+      white-space: nowrap;
+    }
 
-        .contact h2 {
-            font-size: 1.75rem;
-            margin-bottom: 1rem;
-        }
+    .top-link:hover {
+      color: var(--green);
+    }
 
-        .contact p {
-            color: var(--text-secondary);
-            margin-bottom: 1.5rem;
-        }
+    .hero {
+      padding: 52px 0 34px;
+    }
 
-        .email-link {
-            display: inline-block;
-            color: var(--accent-green);
-            font-size: 1.25rem;
-            text-decoration: none;
-            font-weight: 600;
-            padding: 0.75rem 1.5rem;
-            background-color: var(--accent-green-dim);
-            border-radius: 999px;
-            transition: opacity 0.3s ease;
-            direction: ltr; /* Keeps email formatting correct */
-        }
+    .hero-card {
+      position: relative;
+      overflow: hidden;
+      background:
+        linear-gradient(180deg, rgba(20, 33, 56, 0.9), rgba(15, 25, 43, 0.9));
+      border: 1px solid var(--border);
+      border-radius: 34px;
+      padding: 42px 24px 34px;
+      text-align: center;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+    }
 
-        .email-link:hover {
-            opacity: 0.8;
-        }
+    .hero-card::before {
+      content: "";
+      position: absolute;
+      top: -100px;
+      left: -60px;
+      width: 240px;
+      height: 240px;
+      background: var(--blue-glow);
+      border-radius: 999px;
+      filter: blur(40px);
+      pointer-events: none;
+    }
 
-        /* Footer */
-        footer {
-            width: 100%;
-            padding: 2rem 0;
-            border-top: 1px solid var(--border-color);
-            margin-top: auto;
-        }
+    .hero-card::after {
+      content: "";
+      position: absolute;
+      bottom: -90px;
+      right: -30px;
+      width: 220px;
+      height: 220px;
+      background: rgba(16, 185, 129, 0.12);
+      border-radius: 999px;
+      filter: blur(40px);
+      pointer-events: none;
+    }
 
-        .footer-content {
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 0 1.5rem;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 1rem;
-            color: var(--text-secondary);
-            font-size: 0.875rem;
-        }
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+      max-width: 760px;
+      margin: 0 auto;
+    }
 
-        .footer-content a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
+    .hero-logo-wrap {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 18px;
+    }
 
-        .footer-content a:hover {
-            color: var(--accent-green);
-        }
+    .hero-logo {
+      width: 88px;
+      height: 88px;
+      object-fit: contain;
+      border-radius: 24px;
+      padding: 10px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border);
+      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.24);
+    }
 
-        @media (min-width: 768px) {
-            .footer-content {
-                flex-direction: row;
-                justify-content: space-between;
-            }
-        }
-    </style>
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 0.55rem 1rem;
+      border-radius: 999px;
+      background: var(--green-soft);
+      color: var(--green);
+      border: 1px solid rgba(16, 185, 129, 0.18);
+      font-size: 0.9rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+
+    .badge::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: var(--green);
+      box-shadow: 0 0 12px var(--green);
+    }
+
+    h1 {
+      font-size: clamp(2.7rem, 7vw, 4.6rem);
+      line-height: 1.04;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 18px;
+    }
+
+    .subtitle {
+      max-width: 660px;
+      margin: 0 auto 26px;
+      color: var(--text-soft);
+      font-size: clamp(1.06rem, 2vw, 1.3rem);
+      line-height: 1.9;
+    }
+
+    .hero-pills {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 28px;
+    }
+
+    .pill {
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border);
+      color: var(--text-soft);
+      font-size: 0.95rem;
+    }
+
+    .action-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 250px;
+      border: none;
+      border-radius: 999px;
+      padding: 16px 28px;
+      font-family: inherit;
+      font-size: 1.06rem;
+      font-weight: 800;
+      letter-spacing: 0.01em;
+      text-decoration: none;
+      transition: transform 0.25s ease, opacity 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .btn.disabled {
+      background: linear-gradient(180deg, #41516b 0%, #334155 100%);
+      color: #9fb1c7;
+      cursor: not-allowed;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    }
+
+    .note {
+      color: var(--text-muted);
+      font-size: 0.92rem;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 14px;
+      font-size: clamp(1.8rem, 4vw, 2.5rem);
+      font-weight: 800;
+    }
+
+    .section-subtitle {
+      text-align: center;
+      color: var(--text-muted);
+      max-width: 700px;
+      margin: 0 auto 28px;
+      font-size: 1rem;
+      line-height: 1.8;
+    }
+
+    .features-section {
+      padding: 28px 0 42px;
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 18px;
+    }
+
+    .card {
+      position: relative;
+      overflow: hidden;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xl);
+      padding: 26px 22px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+      transition: transform 0.28s ease, box-shadow 0.28s ease, background 0.28s ease, border-color 0.28s ease;
+      min-height: 250px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-hover);
+      background: var(--surface-hover);
+      border-color: rgba(16, 185, 129, 0.16);
+    }
+
+    .card::after {
+      content: "";
+      position: absolute;
+      top: -20px;
+      left: -20px;
+      width: 110px;
+      height: 110px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.03);
+      pointer-events: none;
+    }
+
+    .card-icon {
+      width: 62px;
+      height: 62px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 18px;
+      background: rgba(8, 15, 29, 0.85);
+      border: 1px solid var(--border);
+      font-size: 1.8rem;
+      margin-bottom: 20px;
+      box-shadow: 0 10px 26px rgba(0, 0, 0, 0.18);
+    }
+
+    .card h3 {
+      font-size: 1.28rem;
+      font-weight: 800;
+      margin-bottom: 10px;
+      line-height: 1.4;
+    }
+
+    .card p {
+      color: var(--text-soft);
+      line-height: 1.85;
+      font-size: 0.98rem;
+    }
+
+    .contact {
+      padding: 20px 0 54px;
+    }
+
+    .contact-card {
+      background: linear-gradient(180deg, rgba(20, 33, 56, 0.82), rgba(16, 26, 44, 0.9));
+      border: 1px solid var(--border);
+      border-radius: 30px;
+      padding: 34px 22px;
+      text-align: center;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+    }
+
+    .contact-card h2 {
+      font-size: clamp(1.6rem, 4vw, 2.2rem);
+      margin-bottom: 12px;
+      font-weight: 800;
+    }
+
+    .contact-card p {
+      color: var(--text-soft);
+      max-width: 620px;
+      margin: 0 auto 20px;
+      line-height: 1.8;
+    }
+
+    .email-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      direction: ltr;
+      text-decoration: none;
+      color: var(--green);
+      font-size: 1.06rem;
+      font-weight: 700;
+      padding: 14px 22px;
+      border-radius: 999px;
+      background: var(--green-soft);
+      border: 1px solid rgba(16, 185, 129, 0.16);
+      transition: transform 0.25s ease, opacity 0.25s ease, box-shadow 0.25s ease;
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.16);
+    }
+
+    .email-link:hover {
+      transform: translateY(-2px);
+      opacity: 0.92;
+    }
+
+    footer {
+      border-top: 1px solid var(--border);
+      background: rgba(7, 16, 31, 0.4);
+      backdrop-filter: blur(10px);
+    }
+
+    .footer-content {
+      width: min(100%, var(--max-width));
+      margin: 0 auto;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      color: var(--text-muted);
+      font-size: 0.92rem;
+      text-align: center;
+    }
+
+    .footer-content a {
+      color: var(--text-soft);
+      text-decoration: none;
+      transition: color 0.25s ease;
+    }
+
+    .footer-content a:hover {
+      color: var(--green);
+    }
+
+    @media (min-width: 768px) {
+      .hero {
+        padding-top: 64px;
+      }
+
+      .hero-card {
+        padding: 54px 42px 42px;
+      }
+
+      .footer-content {
+        flex-direction: row;
+        justify-content: space-between;
+      }
+    }
+  </style>
 </head>
 <body>
+  <div class="page">
     <div class="container">
-        <header class="hero">
-            <span class="badge">Android Beta</span>
-            <h1>כולם בסדר</h1>
-            <p class="subtitle">האפליקציה שעוזרת לך לעדכן את מצבך, לנהל מעגל קרובים ולשתף עדכונים דחופים במהירות.</p>
-            
-            <div class="action-section">
-                <button class="btn" disabled>ההורדה תיפתח בקרוב</button>
-                <p class="note">גרסת הבטא הציבורית הראשונה תעלה בקרוב</p>
+      <header class="topbar">
+        <div class="topbar-inner">
+          <div class="brand">
+            <img src="logo.png" alt="Kulam Beseder Logo" class="brand-logo">
+            <div class="brand-text">
+              <strong>כולם בסדר</strong>
+              <span>Kulam Beseder</span>
             </div>
-        </header>
+          </div>
+          <a href="#" class="top-link">מדיניות פרטיות</a>
+        </div>
+      </header>
 
-        <main>
-            <section class="features">
-                <div class="card">
-                    <div class="card-icon">🛡️</div>
-                    <h3>עדכון סטטוס אישי</h3>
-                    <p>עדכן את מצבך בקלות ובמהירות כדי לשמור על שקט נפשי ולהרגיע את האנשים החשובים לך.</p>
-                </div>
-                <div class="card">
-                    <div class="card-icon">👥</div>
-                    <h3>ניהול מעגל קרובים</h3>
-                    <p>הוסף משפחה וחברים למעגל סגור ומאובטח, ודע מה מצבם בכל רגע נתון בצורה פשוטה וברורה.</p>
-                </div>
-                <div class="card">
-                    <div class="card-icon">⚡</div>
-                    <h3>עדכונים דחופים במהירות</h3>
-                    <p>שתף וקבל התראות חשובות בזמן אמת ללא עיכובים, בעזרת ממשק נקי שמתמקד במה שחשוב.</p>
-                </div>
-            </section>
+      <section class="hero">
+        <div class="hero-card">
+          <div class="hero-inner">
+            <div class="hero-logo-wrap">
+              <img src="logo.png" alt="Kulam Beseder Logo" class="hero-logo">
+            </div>
 
-            <section class="contact">
-                <h2>יצירת קשר</h2>
-                <p>לשאלות, תמיכה או משוב על גרסת הבטא, נשמח לעמוד לרשותכם:</p>
-                <a href="mailto:omer.broner23@gmail.com" class="email-link">omer.broner23@gmail.com</a>
-            </section>
-        </main>
+            <span class="badge">Android Beta</span>
+
+            <h1>כולם בסדר</h1>
+
+            <p class="subtitle">
+              האפליקציה שעוזרת לך לעדכן את מצבך, לנהל מעגל קרובים,
+              ולשתף עדכונים חשובים ודחופים במהירות ובפשטות.
+            </p>
+
+            <div class="hero-pills">
+              <span class="pill">עדכוני סטטוס</span>
+              <span class="pill">מעגל קרובים</span>
+              <span class="pill">עדכוני חירום</span>
+            </div>
+
+            <div class="action-section">
+              <span class="btn disabled">ההורדה תיפתח בקרוב</span>
+              <p class="note">גרסת הבטא הציבורית הראשונה תעלה בקרוב</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <main>
+        <section class="features-section">
+          <h2 class="section-title">כל מה שצריך במקום אחד</h2>
+          <p class="section-subtitle">
+            חוויית שימוש נקייה, מהירה וברורה שמאפשרת לך ולעיגול הקרוב שלך
+            להישאר מעודכנים ברגעים חשובים.
+          </p>
+
+          <div class="features">
+            <div class="card">
+              <div class="card-icon">🛡️</div>
+              <h3>עדכון סטטוס אישי</h3>
+              <p>
+                עדכן את מצבך בקלות ובמהירות כדי לשמור על שקט נפשי
+                ולהרגיע את האנשים החשובים לך.
+              </p>
+            </div>
+
+            <div class="card">
+              <div class="card-icon">👥</div>
+              <h3>ניהול מעגל קרובים</h3>
+              <p>
+                הוסף משפחה וחברים למעגל מאובטח, וראה מה מצבם בכל רגע נתון
+                בצורה פשוטה, ברורה ונגישה.
+              </p>
+            </div>
+
+            <div class="card">
+              <div class="card-icon">⚡</div>
+              <h3>עדכונים דחופים במהירות</h3>
+              <p>
+                שתף וקבל התראות חשובות בזמן אמת, עם ממשק מינימלי
+                שמתמקד במה שבאמת חשוב.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section class="contact">
+          <div class="contact-card">
+            <h2>יצירת קשר</h2>
+            <p>
+              לשאלות, תמיכה או משוב על גרסת הבטא,
+              נשמח לעמוד לרשותכם.
+            </p>
+            <a href="mailto:omer.broner23@gmail.com" class="email-link">omer.broner23@gmail.com</a>
+          </div>
+        </section>
+      </main>
     </div>
 
     <footer>
-        <div class="footer-content">
-            <p>Kulam Beseder &copy; 2026</p>
-            <a href="#">מדיניות פרטיות</a>
-        </div>
+      <div class="footer-content">
+        <p>Kulam Beseder © 2026</p>
+        <a href="#">מדיניות פרטיות</a>
+      </div>
     </footer>
+  </div>
 </body>
 </html>
-
-```
